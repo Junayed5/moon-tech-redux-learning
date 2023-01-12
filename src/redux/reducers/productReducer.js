@@ -11,7 +11,15 @@ const productReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_CARD:
             if (selectedProduct) {
-                return state;
+
+                const newCard = state.card.filter(product => product.id !== selectedProduct.id)
+
+                selectedProduct.quantity = selectedProduct.quantity + 1;
+
+                return {
+                    ...state,
+                    card: [...newCard, selectedProduct]
+                };
             }
             return {
                 ...state,
