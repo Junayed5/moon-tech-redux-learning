@@ -5,16 +5,22 @@ const initialState = {
 };
 
 const productReducer = (state = initialState, action) => {
+
+    const selectedProduct = state.card.find(product => product.id === action.payload.id);
+
     switch (action.type) {
         case ADD_TO_CARD:
+            if (selectedProduct) {
+                return state;
+            }
             return {
                 ...state,
-                card: [...state.card, action.payload]
+                card: [...state.card, {...action.payload , quantity : 1}]
             }
         case REMOVE_FROM_CARD:
             return {
                 ...state,
-                card: state.card.filter(product => product._id !== action.payload._id)
+                card: state.card.filter(product => product.id != action.payload.id)
             }
         default:
             return state;
